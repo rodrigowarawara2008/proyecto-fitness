@@ -14,67 +14,120 @@ def conectar():
         port=Config.MYSQL_PORT
     )
 
+# =========================
+# REGISTRO
+# =========================
 @usuarios_bp.route('/registro', methods=['GET', 'POST'])
 def registro():
 
     if request.method == 'POST':
 
-        nombre = request.form['nombre']
-        correo = request.form['correo']
-        password = generate_password_hash(request.form['password'])
+        try:
 
-        conexion = conectar()
-        cursor = conexion.cursor()
+            print("FORMULARIO DE REGISTRO RECIBIDO")
 
-        sql = """
-        INSERT INTO usuarios(nombre,correo,password)
-        VALUES(%s,%s,%s)
-        """
+            nombre = request.form['nombre']
+            correo = request.form['correo']
+            password = generate_password_hash(
+                request.form['password']
+            )
 
-        cursor.execute(sql,(nombre,correo,password))
+            conexion = conectar()
+            cursor = conexion.cursor()
 
-        conexion.commit()
+            sql = """
+            INSERT INTO usuarios
+            (nombre, correo, password)
+            VALUES (%s,%s,%s)
+            """
 
-        cursor.close()
-        conexion.close()
+            cursor.execute(
+                sql,
+                (nombre, correo, password)
+            )
 
-        return redirect('/login')
+            conexion.commit()
+
+            print("USUARIO REGISTRADO CORRECTAMENTE")
+
+            cursor.close()
+            conexion.close()
+
+            return redirect('/login')
+
+        except Exception as e:
+
+            print("ERROR EN REGISTRO:")
+            print(e)
+
+            return f"Error: {e}"
 
     return render_template('registro.html')
 
-@usuarios_bp.route('/login', methods=['GET','POST'])
+
+# =========================
+# LOGIN
+# =========================
+@usuarios_bp.route('/login', methods=['GET', 'POST'])
 def login():
 
     if request.method == 'POST':
 
-        correo = request.form['correo']
-        password = request.form['password']
+        try:
 
-        conexion = conectar()
-        cursor = conexion.cursor(dictionary=True)
+            correo = request.form['correo']
+            password = request.form['password']
 
-        cursor.execute(
-            "SELECT * FROM usuarios WHERE correo=%s",
-            (correo,)
-        )
+            conexion = conectar()
 
-        usuario = cursor.fetchone()
+            cursor = conexion.cursor(
+                dictionary=True
+            )
 
-        cursor.close()
-        conexion.close()
+            cursor.execute(
+                """
+                SELECT *
+                FROM usuarios
+                WHERE correo=%s
+                """,
+                (correo,)
+            )
 
-        if usuario and check_password_hash(
-            usuario['password'],
-            password
-        ):
+            usuario = cursor.fetchone()
 
-            session['usuario_id'] = usuario['id']
-            session['nombre'] = usuario['nombre']
+            cursor.close()
+            conexion.close()
 
-            return redirect('/inicio')
+            if usuario:
+
+                if check_password_hash(
+                    usuario['password'],
+                    password
+                ):
+
+                    session['usuario_id'] = usuario['id']
+                    session['nombre'] = usuario['nombre']
+
+                    return redirect('/inicio')
+
+            return render_template(
+                'login.html',
+                error="Correo o contraseña incorrectos"
+            )
+
+        except Exception as e:
+
+            print("ERROR LOGIN:")
+            print(e)
+
+            return f"Error: {e}"
 
     return render_template('login.html')
 
+
+# =========================
+# LOGOUT
+# =========================
 @usuarios_bp.route('/logout')
 def logout():
 

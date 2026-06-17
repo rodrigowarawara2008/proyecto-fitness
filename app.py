@@ -2,24 +2,26 @@ from flask import Flask, render_template
 from config import Config
 
 from routes.usuarios import usuarios_bp
+from routes.productos import productos_bp
+from routes.carrito import carrito_bp
 
 app = Flask(__name__)
 
 app.config.from_object(Config)
 
+app.secret_key = Config.SECRET_KEY
+
 app.register_blueprint(usuarios_bp)
+app.register_blueprint(productos_bp)
+app.register_blueprint(carrito_bp)
 
-@app.route("/")
+@app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template('index.html')
 
-@app.route("/inicio")
-def inicio():
-    return render_template("inicio.html")
-
-@app.route("/carrito")
+@app.route('/carrito')
 def carrito():
-    return render_template("carrito.html")
+    return render_template('carrito.html')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)

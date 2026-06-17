@@ -20,8 +20,8 @@
 
         <ul>
             <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#productos">Productos</a></li>
             <li><a href="#categorias">Categorías</a></li>
+            <li><a href="#productos">Productos</a></li>
             <li><a href="/carrito">Carrito</a></li>
         </ul>
 
@@ -53,9 +53,7 @@
 
         <div>
 
-            <h1>
-                SUPERA TUS LÍMITES
-            </h1>
+            <h1>SUPERA TUS LÍMITES</h1>
 
             <p>
                 Equipamiento, suplementos y accesorios fitness
@@ -68,9 +66,7 @@
 
     <section class="productos" id="categorias">
 
-        <h2>
-            Categorías
-        </h2>
+        <h2>Categorías</h2>
 
         <div class="grid-productos">
 
@@ -91,7 +87,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3>🎒 Accesorios</h3>
-                    <p>Shakers, guantes, cinturones y más.</p>
+                    <p>Guantes, cinturones, shakers y más.</p>
                 </div>
             </div>
 
@@ -108,54 +104,82 @@
 
     <section class="productos" id="productos">
 
-        <h2>
-            Productos Destacados
-        </h2>
+        <h2>Catálogo de Productos</h2>
 
         <div class="grid-productos">
 
-            <div class="card">
-                <div class="card-body">
-                    <h3>Mancuernas 5kg (Par)</h3>
-                    <p>Par de mancuernas recubiertas en goma.</p>
-                    <p class="precio">Bs. 120</p>
-                    <button class="btn">Agregar al carrito</button>
-                </div>
-            </div>
+            {% for producto in productos %}
 
             <div class="card">
+
+                {% if producto.imagen %}
+                <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
+                {% endif %}
+
                 <div class="card-body">
-                    <h3>Proteína Whey 1kg</h3>
-                    <p>Proteína sabor chocolate.</p>
-                    <p class="precio">Bs. 250</p>
-                    <button class="btn">Agregar al carrito</button>
+
+                    <h3>{{ producto.nombre }}</h3>
+
+                    <p>
+                        {{ producto.descripcion }}
+                    </p>
+
+                    <p>
+                        <strong>Categoría:</strong>
+                        {{ producto.categoria }}
+                    </p>
+
+                    <p>
+                        <strong>Stock:</strong>
+                        {{ producto.stock }}
+                    </p>
+
+                    <p class="precio">
+                        Bs. {{ producto.precio }}
+                    </p>
+
+                    {% if session.get('usuario_id') %}
+
+                    <a
+                        href="/agregar_carrito/{{ producto.id }}"
+                        class="btn"
+                        style="display:inline-block;text-decoration:none;">
+                        Agregar al carrito
+                    </a>
+
+                    {% else %}
+
+                    <a
+                        href="/login"
+                        class="btn"
+                        style="display:inline-block;text-decoration:none;">
+                        Inicia sesión para comprar
+                    </a>
+
+                    {% endif %}
+
                 </div>
+
             </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <h3>Creatina Monohidratada</h3>
-                    <p>Creatina pura para fuerza y rendimiento.</p>
-                    <p class="precio">Bs. 150</p>
-                    <button class="btn">Agregar al carrito</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3>Guantes de Gimnasio</h3>
-                    <p>Soporte para entrenamientos intensos.</p>
-                    <p class="precio">Bs. 60</p>
-                    <button class="btn">Agregar al carrito</button>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
 
     </section>
 
-    <footer style="text-align:center;padding:30px;background:black;">
-        <p>© 2026 Iron Beast - Todos los derechos reservados.</p>
+    <footer
+        style="
+        text-align:center;
+        padding:30px;
+        background:black;
+        margin-top:50px;
+        ">
+
+        <p>
+            © 2026 Iron Beast - Todos los derechos reservados.
+        </p>
+
     </footer>
 
 </body>
