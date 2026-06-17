@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Beast</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            IRON BEAST
+        </div>
+
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#productos">Productos</a></li>
+            <li><a href="#categorias">Categorías</a></li>
+            <li><a href="/carrito">Carrito</a></li>
+        </ul>
+
+        <div>
+
+            {% if session.get('nombre') %}
+
+                <span style="margin-right:15px;">
+                    Hola, {{ session['nombre'] }}
+                </span>
+
+                <a href="/logout" class="btn-login">
+                    Cerrar Sesión
+                </a>
+
+            {% else %}
+
+                <a href="/login" class="btn-login">
+                    Iniciar Sesión
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+    <section class="hero" id="inicio">
+
+        <div>
+
+            <h1>
+                SUPERA TUS LÍMITES
+            </h1>
+
+            <p>
+                Equipamiento, suplementos y accesorios fitness
+                para ayudarte a alcanzar tu mejor versión.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="productos" id="categorias">
+
+        <h2>
+            Categorías
+        </h2>
+
+        <div class="grid-productos">
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>🏋️ Equipamiento</h3>
+                    <p>Mancuernas, barras y accesorios de fuerza.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>💪 Suplementos</h3>
+                    <p>Proteínas, creatina y nutrición deportiva.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>🎒 Accesorios</h3>
+                    <p>Shakers, guantes, cinturones y más.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>🧘 Fitness</h3>
+                    <p>Bandas elásticas y colchonetas.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="productos" id="productos">
+
+        <h2>
+            Productos Destacados
+        </h2>
+
+        <div class="grid-productos">
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>Mancuernas 5kg (Par)</h3>
+                    <p>Par de mancuernas recubiertas en goma.</p>
+                    <p class="precio">Bs. 120</p>
+                    <button class="btn">Agregar al carrito</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>Proteína Whey 1kg</h3>
+                    <p>Proteína sabor chocolate.</p>
+                    <p class="precio">Bs. 250</p>
+                    <button class="btn">Agregar al carrito</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>Creatina Monohidratada</h3>
+                    <p>Creatina pura para fuerza y rendimiento.</p>
+                    <p class="precio">Bs. 150</p>
+                    <button class="btn">Agregar al carrito</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>Guantes de Gimnasio</h3>
+                    <p>Soporte para entrenamientos intensos.</p>
+                    <p class="precio">Bs. 60</p>
+                    <button class="btn">Agregar al carrito</button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer style="text-align:center;padding:30px;background:black;">
+        <p>© 2026 Iron Beast - Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+
+</html>
