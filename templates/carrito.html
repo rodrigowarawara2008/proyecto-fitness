@@ -3,38 +3,143 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-Carrito
-</title>
+    <title>Mi Carrito - Iron Beast</title>
 
-<link rel="stylesheet"
-href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
 <body>
 
-<nav>
+    <nav>
 
-<div class="logo">
-IRON BEAST
-</div>
+        <div class="logo">
+            IRON BEAST
+        </div>
 
-</nav>
+        <ul>
+            <li><a href="/inicio">Inicio</a></li>
+            <li><a href="/carrito">Carrito</a></li>
+        </ul>
 
-<section class="productos">
+    </nav>
 
-<h2>
-Mi Carrito
-</h2>
+    <section class="productos">
 
-<p>
-Los productos agregados aparecerán aquí.
-</p>
+        <h2>🛒 Mi Carrito</h2>
 
-</section>
+        {% if productos %}
+
+        <table
+        style="
+        width:90%;
+        margin:auto;
+        border-collapse:collapse;
+        text-align:center;
+        ">
+
+            <tr style="background:#222;">
+
+                <th style="padding:15px;">Producto</th>
+                <th style="padding:15px;">Precio</th>
+                <th style="padding:15px;">Cantidad</th>
+                <th style="padding:15px;">Subtotal</th>
+                <th style="padding:15px;">Acción</th>
+
+            </tr>
+
+            {% for producto in productos %}
+
+            <tr>
+
+                <td style="padding:15px;">
+                    {{ producto.nombre }}
+                </td>
+
+                <td style="padding:15px;">
+                    Bs. {{ producto.precio }}
+                </td>
+
+                <td style="padding:15px;">
+                    {{ producto.cantidad }}
+                </td>
+
+                <td style="padding:15px;">
+                    Bs. {{ producto.subtotal }}
+                </td>
+
+                <td style="padding:15px;">
+
+                    <a
+                    href="/eliminar_carrito/{{ producto.id }}"
+                    class="btn"
+                    style="text-decoration:none;">
+
+                        Eliminar
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <h2
+        style="
+        text-align:center;
+        margin-top:30px;
+        ">
+
+            Total: Bs. {{ total }}
+
+        </h2>
+
+        <div
+        style="
+        text-align:center;
+        margin-top:25px;
+        ">
+
+            <button class="btn">
+                Finalizar Compra
+            </button>
+
+        </div>
+
+        {% else %}
+
+        <div
+        style="
+        text-align:center;
+        margin-top:40px;
+        ">
+
+            <h3>Tu carrito está vacío</h3>
+
+            <br>
+
+            <a
+            href="/inicio"
+            class="btn"
+            style="text-decoration:none;">
+
+                Ir a comprar
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </section>
 
 </body>
+
 </html>
