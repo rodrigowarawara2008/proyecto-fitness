@@ -118,3 +118,63 @@ border-radius:5px;
 cursor:pointer;
 margin-top:10px;
 }
+
+/* ============================================
+   TUS ESTILOS EXISTENTES (NO BORRES ESTO)
+   ============================================ */
+
+/* Ejemplo de estilos que ya tenías */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* ... todos tus estilos actuales ... */
+
+/* ============================================
+   NUEVOS ESTILOS (AGREGA ESTO AL FINAL)
+   ============================================ */
+
+/* Estilos adicionales para login/registro */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --shadow-sm: 0 4px 20px rgba(0,0,0,0.05);
+    --shadow-hover: 0 20px 60px rgba(0,0,0,0.1);
+}
+
+body {
+    background: #f8f9fa;
+}
+
+/* Mejora en los inputs */
+.input-modern {
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.input-modern:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+/* Efecto hover en tarjetas */
+.card-modern {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-modern:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Animación de carga */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.btn-primary-custom:active {
+    animation: pulse 0.3s ease;
+}

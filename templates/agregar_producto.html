@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Agregar Producto{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 style="color: #ffffff; border-left: 4px solid #ff6b00; padding-left: 15px; margin-bottom: 2rem;">
+        <i class="fas fa-plus-circle" style="color: #ff6b00;"></i> Agregar Nuevo Producto
+    </h1>
+    
+    <div style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 16px; padding: 2rem; max-width: 600px;">
+        <form method="POST">
+            <div style="margin-bottom: 1rem;">
+                <label style="color: #ffffff; font-weight: 600;">Nombre del Producto *</label>
+                <input type="text" name="nombre" required style="width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #ff6b00; color: #ffffff; border-radius: 8px;">
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="color: #ffffff; font-weight: 600;">Descripción</label>
+                <textarea name="descripcion" style="width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #ff6b00; color: #ffffff; border-radius: 8px; min-height: 80px;"></textarea>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                <div style="flex: 1;">
+                    <label style="color: #ffffff; font-weight: 600;">Precio (Bs.) *</label>
+                    <input type="number" name="precio" step="0.01" required style="width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #ff6b00; color: #ffffff; border-radius: 8px;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="color: #ffffff; font-weight: 600;">Stock *</label>
+                    <input type="number" name="stock" required style="width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #ff6b00; color: #ffffff; border-radius: 8px;">
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="color: #ffffff; font-weight: 600;">Categoría</label>
+                <select name="categoria" style="width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #ff6b00; color: #ffffff; border-radius: 8px;">
+                    <option value="">Sin categoría</option>
+                    <option value="Equipamiento">Equipamiento</option>
+                    <option value="Suplementos">Suplementos</option>
+                    <option value="Accesorios">Accesorios</option>
+                    <option value="Fitness">Fitness</option>
+                    <option value="Ropa">Ropa</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="color: #ffffff; font-weight: 600;">URL de la Imagen</label>
+                <input type="url" name="imagen" placeholder="https://ejemplo.com/imagen.jpg" style="width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #ff6b00; color: #ffffff; border-radius: 8px;">
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" style="padding: 12px 30px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; border: none; cursor: pointer;">
+                    <i class="fas fa-save"></i> Guardar Producto
+                </button>
+                <a href="/admin" style="display: inline-block; text-decoration: none; padding: 12px 30px; border: 2px solid #ff6b00; color: #ff6b00; border-radius: 50px; font-weight: 600;">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

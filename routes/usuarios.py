@@ -19,50 +19,33 @@ def conectar():
 # =========================
 @usuarios_bp.route('/registro', methods=['GET', 'POST'])
 def registro():
-
     if request.method == 'POST':
-
         try:
-
             print("FORMULARIO DE REGISTRO RECIBIDO")
-
             nombre = request.form['nombre']
             correo = request.form['correo']
-            password = generate_password_hash(
-                request.form['password']
-            )
-
+            password = generate_password_hash(request.form['password'])
+            
             conexion = conectar()
             cursor = conexion.cursor()
-
             sql = """
             INSERT INTO usuarios
             (nombre, correo, password)
             VALUES (%s,%s,%s)
             """
-
-            cursor.execute(
-                sql,
-                (nombre, correo, password)
-            )
-
+            cursor.execute(sql, (nombre, correo, password))
             conexion.commit()
-
             print("USUARIO REGISTRADO CORRECTAMENTE")
-
             cursor.close()
             conexion.close()
-
             return redirect('/login')
-
         except Exception as e:
-
             print("ERROR EN REGISTRO:")
             print(e)
-
             return f"Error: {e}"
-
-    return render_template('registro.html')
+    
+    # CAMBIADO: ahora busca en la carpeta usuarios/
+    return render_template('usuarios/registro.html')
 
 
 # =========================
@@ -70,59 +53,34 @@ def registro():
 # =========================
 @usuarios_bp.route('/login', methods=['GET', 'POST'])
 def login():
-
     if request.method == 'POST':
-
         try:
-
             correo = request.form['correo']
             password = request.form['password']
-
+            
             conexion = conectar()
-
-            cursor = conexion.cursor(
-                dictionary=True
-            )
-
-            cursor.execute(
-                """
-                SELECT *
-                FROM usuarios
-                WHERE correo=%s
-                """,
-                (correo,)
-            )
-
+            cursor = conexion.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM usuarios WHERE correo=%s", (correo,))
             usuario = cursor.fetchone()
-
             cursor.close()
             conexion.close()
-
+            
             if usuario:
-
-                if check_password_hash(
-                    usuario['password'],
-                    password
-                ):
-
+                if check_password_hash(usuario['password'], password):
                     session['usuario_id'] = usuario['id']
                     session['nombre'] = usuario['nombre']
-
                     return redirect('/inicio')
-
-            return render_template(
-                'login.html',
-                error="Correo o contraseña incorrectos"
-            )
-
+            
+            # CAMBIADO: ahora busca en la carpeta usuarios/
+            return render_template('usuarios/login.html', error="Correo o contraseña incorrectos")
+        
         except Exception as e:
-
             print("ERROR LOGIN:")
             print(e)
-
             return f"Error: {e}"
-
-    return render_template('login.html')
+    
+    # CAMBIADO: ahora busca en la carpeta usuarios/
+    return render_template('usuarios/login.html')
 
 
 # =========================
@@ -130,7 +88,5 @@ def login():
 # =========================
 @usuarios_bp.route('/logout')
 def logout():
-
     session.clear()
-
     return redirect('/')

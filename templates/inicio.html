@@ -1,187 +1,71 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iron Beast</title>
+{% block title %}IRON BEAST - Inicio{% endblock %}
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-
-<body>
-
-    <nav>
-
-        <div class="logo">
-            IRON BEAST
-        </div>
-
-        <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#categorias">Categorías</a></li>
-            <li><a href="#productos">Productos</a></li>
-            <li><a href="/carrito">Carrito</a></li>
-        </ul>
-
-        <div>
-
-            {% if session.get('nombre') %}
-
-                <span style="margin-right:15px;">
-                    Hola, {{ session['nombre'] }}
-                </span>
-
-                <a href="/logout" class="btn-login">
-                    Cerrar Sesión
-                </a>
-
-            {% else %}
-
-                <a href="/login" class="btn-login">
-                    Iniciar Sesión
-                </a>
-
-            {% endif %}
-
-        </div>
-
-    </nav>
-
-    <section class="hero" id="inicio">
-
-        <div>
-
-            <h1>SUPERA TUS LÍMITES</h1>
-
-            <p>
-                Equipamiento, suplementos y accesorios fitness
-                para ayudarte a alcanzar tu mejor versión.
-            </p>
-
-        </div>
-
-    </section>
-
-    <section class="productos" id="categorias">
-
-        <h2>Categorías</h2>
-
-        <div class="grid-productos">
-
-            <div class="card">
-                <div class="card-body">
-                    <h3>🏋️ Equipamiento</h3>
-                    <p>Mancuernas, barras y accesorios de fuerza.</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3>💪 Suplementos</h3>
-                    <p>Proteínas, creatina y nutrición deportiva.</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3>🎒 Accesorios</h3>
-                    <p>Guantes, cinturones, shakers y más.</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3>🧘 Fitness</h3>
-                    <p>Bandas elásticas y colchonetas.</p>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="productos" id="productos">
-
-        <h2>Catálogo de Productos</h2>
-
-        <div class="grid-productos">
-
-            {% for producto in productos %}
-
-            <div class="card">
-
-                {% if producto.imagen %}
-                <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
-                {% endif %}
-
-                <div class="card-body">
-
-                    <h3>{{ producto.nombre }}</h3>
-
-                    <p>
-                        {{ producto.descripcion }}
-                    </p>
-
-                    <p>
-                        <strong>Categoría:</strong>
-                        {{ producto.categoria }}
-                    </p>
-
-                    <p>
-                        <strong>Stock:</strong>
-                        {{ producto.stock }}
-                    </p>
-
-                    <p class="precio">
-                        Bs. {{ producto.precio }}
-                    </p>
-
-                    {% if session.get('usuario_id') %}
-
-                    <a
-                        href="/agregar_carrito/{{ producto.id }}"
-                        class="btn"
-                        style="display:inline-block;text-decoration:none;">
-                        Agregar al carrito
-                    </a>
-
-                    {% else %}
-
-                    <a
-                        href="/login"
-                        class="btn"
-                        style="display:inline-block;text-decoration:none;">
-                        Inicia sesión para comprar
-                    </a>
-
-                    {% endif %}
-
-                </div>
-
-            </div>
-
-            {% endfor %}
-
-        </div>
-
-    </section>
-
-    <footer
-        style="
-        text-align:center;
-        padding:30px;
-        background:black;
-        margin-top:50px;
-        ">
-
-        <p>
-            © 2026 Iron Beast - Todos los derechos reservados.
+{% block content %}
+<!-- ========================================== -->
+<!-- HERO -->
+<!-- ========================================== -->
+<section class="hero" style="padding: 4rem 0; text-align: center; border-bottom: 1px solid #ff6b00;">
+    <div class="container">
+        <h1 style="font-size: 3.5rem; font-weight: 700; color: #ffffff;">
+            SUPERA TUS LÍMITES
+        </h1>
+        <p style="color: #cccccc; font-size: 1.2rem; max-width: 600px; margin: 0 auto;">
+            Equipamiento, suplementos y accesorios fitness
+            para ayudarte a alcanzar tu mejor versión.
         </p>
+    </div>
+</section>
 
-    </footer>
-
-</body>
-
-</html>
+<!-- ========================================== -->
+<!-- CATÁLOGO DE PRODUCTOS -->
+<!-- ========================================== -->
+<section style="padding: 3rem 0;">
+    <div class="container">
+        <h2 style="color: #ffffff; border-left: 4px solid #ff6b00; padding-left: 15px; margin-bottom: 2rem;">
+            <i class="fas fa-box" style="color: #ff6b00;"></i> Catálogo de Productos
+        </h2>
+        
+        <p style="color: #ff6b00; margin-bottom: 1rem;">
+            <strong>Total: {{ productos|length if productos else 0 }} productos</strong>
+        </p>
+        
+        <div class="row">
+            {% if productos %}
+                {% for producto in productos %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                        <h5 style="color: #ffffff; font-weight: 600;">{{ producto.nombre }}</h5>
+                        <p style="color: #cccccc; font-size: 0.9rem;">{{ producto.descripcion[:80] }}{% if producto.descripcion|length > 80 %}...{% endif %}</p>
+                        
+                        <p style="color: #aaaaaa; font-size: 0.85rem;">
+                            <strong style="color: #ff6b00;">Stock:</strong> {{ producto.stock }}
+                        </p>
+                        <p style="color: #ff6b00; font-size: 1.4rem; font-weight: 700;">Bs. {{ "%.2f"|format(producto.precio) }}</p>
+                        
+                        {% if session.get('usuario_id') %}
+                            <a href="/agregar_carrito/{{ producto.id }}" 
+                               style="display: inline-block; text-decoration: none; text-align: center; padding: 10px 20px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; width: 100%; border: none; cursor: pointer;">
+                                <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                            </a>
+                        {% else %}
+                            <a href="/login" 
+                               style="display: inline-block; text-decoration: none; text-align: center; padding: 10px 20px; border: 2px solid #ff6b00; color: #ff6b00; border-radius: 50px; font-weight: 600; width: 100%; background: transparent;">
+                                <i class="fas fa-sign-in-alt"></i> Inicia sesión
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 16px; padding: 3rem; text-align: center;">
+                        <p style="color: #aaaaaa; font-size: 1.2rem;">No hay productos disponibles</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

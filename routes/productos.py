@@ -13,26 +13,16 @@ def conectar():
         port=Config.MYSQL_PORT
     )
 
-@productos_bp.route('/')
-@productos_bp.route('/inicio')
-def inicio():
-
+# ============================================
+# CATÁLOGO DE PRODUCTOS
+# ============================================
+@productos_bp.route('/productos')
+def catalogo():
     conexion = conectar()
-
     cursor = conexion.cursor(dictionary=True)
-
-    cursor.execute("""
-        SELECT *
-        FROM productos
-        ORDER BY id DESC
-    """)
-
+    cursor.execute("SELECT * FROM productos ORDER BY id DESC")
     productos = cursor.fetchall()
-
     cursor.close()
     conexion.close()
-
-    return render_template(
-        'inicio.html',
-        productos=productos
-    )
+    
+    return render_template('productos.html', productos=productos)

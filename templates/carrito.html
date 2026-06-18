@@ -1,145 +1,90 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base.html" %}
 
-<head>
+{% block title %}Carrito - IRON BEAST{% endblock %}
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
+<div class="container py-4">
+    <h1 class="section-title" style="color: #ffffff; border-left: 4px solid #ff6b00; padding-left: 15px; margin-bottom: 2rem;">
+        <i class="fas fa-shopping-cart" style="color: #ff6b00;"></i> Carrito de Compras
+    </h1>
 
-    <title>Mi Carrito - Iron Beast</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
-
-</head>
-
-<body>
-
-    <nav>
-
-        <div class="logo">
-            IRON BEAST
+    {% if carrito and carrito|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-dark-iron" style="background: #0a0a0a; color: #ffffff; border-color: #ff6b00; width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #ff6b00;">
+                        <th style="color: #ff6b00; padding: 12px;">Producto</th>
+                        <th style="color: #ff6b00; padding: 12px;">Precio</th>
+                        <th style="color: #ff6b00; padding: 12px;">Cantidad</th>
+                        <th style="color: #ff6b00; padding: 12px;">Subtotal</th>
+                        <th style="color: #ff6b00; padding: 12px;">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in carrito %}
+                    <tr style="border-bottom: 1px solid #333333;">
+                        <td style="padding: 12px; color: #ffffff;">{{ item.nombre }}</td>
+                        <td style="padding: 12px; color: #ff6b00;">Bs. {{ "%.2f"|format(item.precio) }}</td>
+                        <td style="padding: 12px; color: #ffffff;">
+                            <form method="POST" action="/actualizar_carrito/{{ item.id }}" style="display: flex; align-items: center; gap: 10px;">
+                                <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" style="width: 60px; padding: 5px; background: #0a0a0a; border: 1px solid #ff6b00; color: #ffffff; border-radius: 8px;">
+                                <button type="submit" class="btn-iron-outline" style="padding: 5px 15px; font-size: 0.8rem; background: transparent; border: 1px solid #ff6b00; color: #ff6b00; border-radius: 8px; cursor: pointer;">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <td style="padding: 12px; color: #ff6b00;">Bs. {{ "%.2f"|format(item.precio * item.cantidad) }}</td>
+                        <td style="padding: 12px;">
+                            <a href="/eliminar_carrito/{{ item.id }}" class="btn-eliminar" style="background: #dc3545; color: #ffffff; border: none; padding: 6px 15px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr style="border-top: 2px solid #ff6b00;">
+                        <td colspan="3" style="text-align: right; padding: 15px; color: #ffffff; font-weight: 700;">Total:</td>
+                        <td style="padding: 15px; color: #ff6b00; font-size: 1.4rem; font-weight: 700;">
+                            Bs. {{ "%.2f"|format(total) }}
+                        </td>
+                        <td style="padding: 15px;"></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
 
-        <ul>
-            <li><a href="/inicio">Inicio</a></li>
-            <li><a href="/carrito">Carrito</a></li>
-        </ul>
-
-    </nav>
-
-    <section class="productos">
-
-        <h2>🛒 Mi Carrito</h2>
-
-        {% if productos %}
-
-        <table
-        style="
-        width:90%;
-        margin:auto;
-        border-collapse:collapse;
-        text-align:center;
-        ">
-
-            <tr style="background:#222;">
-
-                <th style="padding:15px;">Producto</th>
-                <th style="padding:15px;">Precio</th>
-                <th style="padding:15px;">Cantidad</th>
-                <th style="padding:15px;">Subtotal</th>
-                <th style="padding:15px;">Acción</th>
-
-            </tr>
-
-            {% for producto in productos %}
-
-            <tr>
-
-                <td style="padding:15px;">
-                    {{ producto.nombre }}
-                </td>
-
-                <td style="padding:15px;">
-                    Bs. {{ producto.precio }}
-                </td>
-
-                <td style="padding:15px;">
-                    {{ producto.cantidad }}
-                </td>
-
-                <td style="padding:15px;">
-                    Bs. {{ producto.subtotal }}
-                </td>
-
-                <td style="padding:15px;">
-
-                    <a
-                    href="/eliminar_carrito/{{ producto.id }}"
-                    class="btn"
-                    style="text-decoration:none;">
-
-                        Eliminar
-
-                    </a>
-
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </table>
-
-        <h2
-        style="
-        text-align:center;
-        margin-top:30px;
-        ">
-
-            Total: Bs. {{ total }}
-
-        </h2>
-
-        <div
-        style="
-        text-align:center;
-        margin-top:25px;
-        ">
-
-            <button class="btn">
-                Finalizar Compra
-            </button>
-
-        </div>
-
-        {% else %}
-
-        <div
-        style="
-        text-align:center;
-        margin-top:40px;
-        ">
-
-            <h3>Tu carrito está vacío</h3>
-
-            <br>
-
-            <a
-            href="/inicio"
-            class="btn"
-            style="text-decoration:none;">
-
-                Ir a comprar
-
+        <div class="text-end mt-4">
+            <a href="/finalizar_compra" class="btn-iron" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 40px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 700; border: none; cursor: pointer;">
+                <i class="fas fa-check-circle"></i> Finalizar Compra
             </a>
-
         </div>
+    {% else %}
+        <div class="text-center py-5" style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 16px;">
+            <i class="fas fa-shopping-cart" style="font-size: 4rem; color: #333333; margin-bottom: 1rem;"></i>
+            <h3 style="color: #ffffff;">Tu carrito está vacío</h3>
+            <p style="color: #888888;">¡Explora nuestro catálogo y agrega productos!</p>
+            <a href="/" class="btn-iron" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 30px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; margin-top: 1rem;">
+                <i class="fas fa-arrow-left"></i> Ver Productos
+            </a>
+        </div>
+    {% endif %}
+</div>
 
-        {% endif %}
-
-    </section>
-
-</body>
-
-</html>
+<style>
+    .btn-eliminar:hover {
+        background: #c82333 !important;
+        transform: scale(1.05);
+    }
+    
+    .btn-iron-outline:hover {
+        background: #ff6b00 !important;
+        color: #ffffff !important;
+    }
+    
+    .btn-iron:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 20px rgba(255, 107, 0, 0.3);
+    }
+</style>
+{% endblock %}
