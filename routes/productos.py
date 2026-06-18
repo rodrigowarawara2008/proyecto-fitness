@@ -13,6 +13,7 @@ def conectar():
         port=Config.MYSQL_PORT
     )
 
+@productos_bp.route('/')
 @productos_bp.route('/inicio')
 def inicio():
 
