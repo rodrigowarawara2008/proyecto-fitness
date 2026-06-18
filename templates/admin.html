@@ -12,37 +12,52 @@
         <a href="/admin/agregar" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 30px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; border: none; cursor: pointer;">
             <i class="fas fa-plus-circle"></i> Agregar Nuevo Producto
         </a>
+        <a href="/" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 30px; background: transparent; color: #ff6b00; border-radius: 50px; font-weight: 600; border: 2px solid #ff6b00; cursor: pointer; margin-left: 10px;">
+            <i class="fas fa-arrow-left"></i> Volver a la tienda
+        </a>
     </div>
     
     <div style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 16px; padding: 2rem;">
-        <h3 style="color: #ffffff;">Lista de Productos</h3>
+        <h3 style="color: #ffffff; margin-bottom: 1rem;">Lista de Productos</h3>
         
         {% if productos %}
-            <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
-                <thead>
-                    <tr style="border-bottom: 2px solid #ff6b00;">
-                        <th style="color: #ff6b00; padding: 10px; text-align: left;">ID</th>
-                        <th style="color: #ff6b00; padding: 10px; text-align: left;">Nombre</th>
-                        <th style="color: #ff6b00; padding: 10px; text-align: left;">Precio</th>
-                        <th style="color: #ff6b00; padding: 10px; text-align: left;">Stock</th>
-                        <th style="color: #ff6b00; padding: 10px; text-align: left;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for producto in productos %}
-                    <tr style="border-bottom: 1px solid #333333;">
-                        <td style="padding: 10px; color: #ffffff;">{{ producto.id }}</td>
-                        <td style="padding: 10px; color: #ffffff;">{{ producto.nombre }}</td>
-                        <td style="padding: 10px; color: #ff6b00;">Bs. {{ "%.2f"|format(producto.precio) }}</td>
-                        <td style="padding: 10px; color: #ffffff;">{{ producto.stock }}</td>
-                        <td style="padding: 10px;">
-                            <a href="/admin/editar/{{ producto.id }}" style="display: inline-block; text-decoration: none; padding: 5px 15px; border: 1px solid #ff6b00; color: #ff6b00; border-radius: 8px; font-weight: 600; margin-right: 5px;">Editar</a>
-                            <a href="/admin/eliminar/{{ producto.id }}" style="display: inline-block; text-decoration: none; padding: 5px 15px; background: #dc3545; color: #ffffff; border-radius: 8px; font-weight: 600;" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #ff6b00;">
+                            <th style="color: #ff6b00; padding: 10px; text-align: left;">ID</th>
+                            <th style="color: #ff6b00; padding: 10px; text-align: left;">Nombre</th>
+                            <th style="color: #ff6b00; padding: 10px; text-align: left;">Precio</th>
+                            <th style="color: #ff6b00; padding: 10px; text-align: left;">Stock</th>
+                            <th style="color: #ff6b00; padding: 10px; text-align: left;">Categoría</th>
+                            <th style="color: #ff6b00; padding: 10px; text-align: left;">Imagen</th>
+                            <th style="color: #ff6b00; padding: 10px; text-align: left;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr style="border-bottom: 1px solid #333333;">
+                            <td style="padding: 10px; color: #ffffff;">{{ producto.id }}</td>
+                            <td style="padding: 10px; color: #ffffff;">{{ producto.nombre }}</td>
+                            <td style="padding: 10px; color: #ff6b00;">Bs. {{ "%.2f"|format(producto.precio) }}</td>
+                            <td style="padding: 10px; color: #ffffff;">{{ producto.stock }}</td>
+                            <td style="padding: 10px; color: #aaaaaa;">{{ producto.categoria or 'Sin categoría' }}</td>
+                            <td style="padding: 10px;">
+                                {% if producto.imagen %}
+                                    <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+                                {% else %}
+                                    <span style="color: #666666;">Sin imagen</span>
+                                {% endif %}
+                            </td>
+                            <td style="padding: 10px;">
+                                <a href="/admin/editar/{{ producto.id }}" style="display: inline-block; text-decoration: none; padding: 5px 15px; border: 1px solid #ff6b00; color: #ff6b00; border-radius: 8px; font-weight: 600; margin-right: 5px;">Editar</a>
+                                <a href="/admin/eliminar/{{ producto.id }}" style="display: inline-block; text-decoration: none; padding: 5px 15px; background: #dc3545; color: #ffffff; border-radius: 8px; font-weight: 600;" onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
             <p style="color: #aaaaaa;">No hay productos disponibles</p>
         {% endif %}

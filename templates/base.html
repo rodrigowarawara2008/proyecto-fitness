@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}IRON BEAST{% endblock %}</title>
+    <title>IRON BEAST - Tienda Fitness</title>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,27 +12,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== FORZAR TODO A NEGRO ===== */
-        
-        /* Fondo negro en todo el sitio */
-        html, body, .container, .row, .col, main, section, div, nav, footer, header, .main-container {
-            background-color: #0a0a0a !important;
+        /* ===== ESTILOS OSCUROS PARA IRON BEAST ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        /* Texto blanco en todo el sitio */
-        body, p, h1, h2, h3, h4, h5, h6, span, div, li, a, label, td, th {
-            color: #ffffff !important;
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        /* Excepción: links y texto naranja */
-        .text-iron, .link-iron, .navbar-brand, .precio, .categoria-card i, .section-title i {
-            color: #ff6b00 !important;
-        }
-        
-        /* Navbar */
+        /* Navbar oscuro */
         .navbar-dark-custom {
-            background: #0a0a0a !important;
-            border-bottom: 2px solid #ff6b00 !important;
+            background: #111111;
+            border-bottom: 2px solid #ff6b00;
             padding: 1rem 0;
         }
         
@@ -42,41 +38,53 @@
             font-size: 1.8rem;
         }
         
+        .navbar-dark-custom .navbar-brand i {
+            color: #ff6b00;
+        }
+        
         .navbar-dark-custom .nav-link {
-            color: #ffffff !important;
+            color: #cccccc !important;
+            font-weight: 500;
         }
         
         .navbar-dark-custom .nav-link:hover {
             color: #ff6b00 !important;
         }
         
-        /* Tarjetas */
-        .card-dark, .producto-card, .categoria-card {
-            background: #0a0a0a !important;
-            border: 1px solid #ff6b00 !important;
-            border-radius: 16px;
-            padding: 2rem;
-            color: #ffffff !important;
+        .navbar-dark-custom .nav-link i {
+            margin-right: 5px;
         }
         
-        /* Inputs */
+        /* Tarjetas oscuras */
+        .card-dark {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 2rem;
+            color: #ffffff;
+        }
+        
+        /* Inputs oscuros */
         .input-dark {
-            background: #0a0a0a !important;
-            border: 1px solid #ff6b00 !important;
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
             border-radius: 12px;
             padding: 12px 20px;
-            color: #ffffff !important;
+            color: #ffffff;
             width: 100%;
+            transition: all 0.3s;
         }
         
         .input-dark:focus {
-            border-color: #ff6b00 !important;
-            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2) !important;
+            border-color: #ff6b00;
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.15);
             outline: none;
         }
         
         .input-dark::placeholder {
-            color: #666666 !important;
+            color: #666666;
         }
         
         .input-group-icon {
@@ -88,7 +96,7 @@
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #ff6b00 !important;
+            color: #666666;
             z-index: 10;
         }
         
@@ -98,94 +106,79 @@
         
         /* Botón principal */
         .btn-iron {
-            background: #ff6b00 !important;
-            border: none !important;
-            color: #ffffff !important;
+            background: #ff6b00;
+            border: none;
+            color: #fff;
             font-weight: 600;
             padding: 12px 30px;
             border-radius: 50px;
             width: 100%;
+            transition: all 0.3s;
         }
         
         .btn-iron:hover {
-            background: #e05f00 !important;
-            color: #ffffff !important;
+            background: #e05f00;
+            transform: scale(1.02);
+            color: #fff;
         }
         
-        /* Footer */
+        .btn-iron-outline {
+            background: transparent;
+            border: 2px solid #ff6b00;
+            color: #ff6b00;
+            font-weight: 600;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        .btn-iron-outline:hover {
+            background: #ff6b00;
+            color: #fff;
+        }
+        
+        .link-iron {
+            color: #ff6b00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .link-iron:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer oscuro */
         .footer-dark {
-            background: #0a0a0a !important;
-            border-top: 2px solid #ff6b00 !important;
+            background: #111111;
+            border-top: 2px solid #ff6b00;
             padding: 2rem 0;
-            color: #888888 !important;
+            color: #888888;
             margin-top: auto;
         }
         
-        .footer-dark p, .footer-dark small {
-            color: #888888 !important;
+        .footer-dark p {
+            color: #888888;
+        }
+        
+        .footer-dark small {
+            color: #666666;
         }
         
         .footer-dark i {
-            color: #ff6b00 !important;
+            color: #ff6b00;
         }
         
-        /* Alertas */
-        .alert-dark {
-            background: #0a0a0a !important;
-            border: 1px solid #ff6b00 !important;
-            color: #ffffff !important;
-            border-radius: 12px;
-        }
-        
-        .alert-dark .btn-close {
-            filter: invert(1);
-        }
-        
-        /* Tabla del carrito */
-        .table-dark-iron, .table-dark-iron th, .table-dark-iron td {
-            background: #0a0a0a !important;
-            color: #ffffff !important;
-            border-color: #ff6b00 !important;
-        }
-        
-        .table-dark-iron th {
-            color: #ff6b00 !important;
-        }
-        
-        /* Quitar fondos grises de Bootstrap en tablas */
-        .table-striped > tbody > tr:nth-of-type(odd) > *,
-        .table-striped > tbody > tr:nth-of-type(even) > * {
-            background: #0a0a0a !important;
-            color: #ffffff !important;
-        }
-        
-        /* Hero */
-        .hero-section {
-            background: #0a0a0a !important;
-            padding: 4rem 0;
-            text-align: center;
-            border-bottom: 1px solid #ff6b00 !important;
-        }
-        
-        .hero-section h1 {
-            color: #ffffff !important;
-            font-size: 3.5rem;
-            font-weight: 700;
-        }
-        
-        .hero-section h1 span {
-            color: #ff6b00 !important;
-        }
-        
-        .hero-section p {
-            color: #cccccc !important;
-            font-size: 1.2rem;
+        /* Contenedor principal */
+        .main-container {
+            min-height: 80vh;
+            padding: 2rem 0;
         }
         
         /* Títulos */
         .section-title {
-            color: #ffffff !important;
-            border-left: 4px solid #ff6b00 !important;
+            color: #ffffff;
+            font-weight: 700;
+            border-left: 4px solid #ff6b00;
             padding-left: 15px;
         }
         
@@ -199,11 +192,78 @@
             animation: fadeInUp 0.6s ease forwards;
         }
         
-        /* Contenedor principal */
-        .main-container {
-            min-height: 80vh;
-            padding: 2rem 0;
-            background: #0a0a0a !important;
+        /* Estilos para productos */
+        .producto-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            color: #ffffff;
+        }
+        
+        .producto-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff6b00;
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.2);
+        }
+        
+        .producto-card .precio {
+            color: #ff6b00;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        /* Categorías */
+        .categoria-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .categoria-card:hover {
+            border-color: #ff6b00;
+            transform: translateY(-5px);
+        }
+        
+        .categoria-card i {
+            font-size: 2.5rem;
+            color: #ff6b00;
+        }
+        
+        .categoria-card h5 {
+            color: #ffffff;
+            margin-top: 1rem;
+        }
+        
+        .categoria-card p {
+            color: #888888;
+        }
+        
+        /* Hero */
+        .hero-section {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .hero-section h1 span {
+            color: #ff6b00;
+        }
+        
+        .hero-section p {
+            color: #aaaaaa;
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -223,16 +283,24 @@
                         <a class="nav-link" href="{{ url_for('index') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Categorías</a>
+                        <a class="nav-link" href="#categorias">Categorías</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Productos</a>
+                        <a class="nav-link" href="#productos">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('carrito') }}">
                             <i class="fas fa-shopping-cart"></i> Carrito
                         </a>
                     </li>
+                    <!-- Enlace de administración (solo visible para admin) -->
+                    {% if session.get('es_admin') == 1 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin" style="color: #ff6b00 !important;">
+                            <i class="fas fa-user-shield"></i> Admin
+                        </a>
+                    </li>
+                    {% endif %}
                     {% if session.get('usuario_id') %}
                         <li class="nav-item">
                             <a class="nav-link" href="#">

@@ -175,7 +175,6 @@ def compra_exitosa():
 # PANEL DE ADMINISTRACIÓN
 # ============================================
 
-# Verificar si el usuario es admin
 def es_admin():
     if 'usuario_id' not in session:
         return False
@@ -189,7 +188,6 @@ def es_admin():
     
     return usuario and usuario.get('es_admin', 0) == 1
 
-# Panel de administración
 @app.route('/admin')
 def admin_panel():
     if not es_admin():
@@ -204,7 +202,6 @@ def admin_panel():
     
     return render_template('admin.html', productos=productos)
 
-# Agregar producto
 @app.route('/admin/agregar', methods=['GET', 'POST'])
 def admin_agregar_producto():
     if not es_admin():
@@ -233,7 +230,6 @@ def admin_agregar_producto():
     
     return render_template('agregar_producto.html')
 
-# Editar producto
 @app.route('/admin/editar/<int:producto_id>', methods=['GET', 'POST'])
 def admin_editar_producto(producto_id):
     if not es_admin():
@@ -268,7 +264,6 @@ def admin_editar_producto(producto_id):
     
     return render_template('editar_producto.html', producto=producto)
 
-# Eliminar producto
 @app.route('/admin/eliminar/<int:producto_id>')
 def admin_eliminar_producto(producto_id):
     if not es_admin():

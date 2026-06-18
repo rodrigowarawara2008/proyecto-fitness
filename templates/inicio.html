@@ -6,7 +6,7 @@
 <!-- ========================================== -->
 <!-- HERO -->
 <!-- ========================================== -->
-<section class="hero" style="padding: 4rem 0; text-align: center; border-bottom: 1px solid #ff6b00;">
+<section class="hero" id="inicio" style="padding: 4rem 0; text-align: center; border-bottom: 1px solid #ff6b00;">
     <div class="container">
         <h1 style="font-size: 3.5rem; font-weight: 700; color: #ffffff;">
             SUPERA TUS LÍMITES
@@ -19,14 +19,76 @@
 </section>
 
 <!-- ========================================== -->
+<!-- CATEGORÍAS -->
+<!-- ========================================== -->
+<section class="categorias" id="categorias" style="padding: 3rem 0;">
+    <div class="container">
+        <h2 class="section-title" style="color: #ffffff; border-left: 4px solid #ff6b00; padding-left: 15px; margin-bottom: 2rem;">
+            <i class="fas fa-th-large" style="color: #ff6b00;"></i> Categorías
+        </h2>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="categoria-card" style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s;">
+                    <i class="fas fa-dumbbell" style="font-size: 2.5rem; color: #ff6b00;"></i>
+                    <h5 style="color: #ffffff; margin-top: 1rem;">Equipamiento</h5>
+                    <p style="color: #aaaaaa;">Mancuernas, barras y accesorios de fuerza.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="categoria-card" style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s;">
+                    <i class="fas fa-flask" style="font-size: 2.5rem; color: #ff6b00;"></i>
+                    <h5 style="color: #ffffff; margin-top: 1rem;">Suplementos</h5>
+                    <p style="color: #aaaaaa;">Proteínas, creatina y nutrición deportiva.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="categoria-card" style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s;">
+                    <i class="fas fa-shopping-bag" style="font-size: 2.5rem; color: #ff6b00;"></i>
+                    <h5 style="color: #ffffff; margin-top: 1rem;">Accesorios</h5>
+                    <p style="color: #aaaaaa;">Guantes, cinturones, shakers y más.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="categoria-card" style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s;">
+                    <i class="fas fa-running" style="font-size: 2.5rem; color: #ff6b00;"></i>
+                    <h5 style="color: #ffffff; margin-top: 1rem;">Fitness</h5>
+                    <p style="color: #aaaaaa;">Bandas elásticas y colchonetas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================== -->
 <!-- CATÁLOGO DE PRODUCTOS -->
 <!-- ========================================== -->
-<section style="padding: 3rem 0;">
+<section class="productos" id="productos" style="padding: 3rem 0;">
     <div class="container">
-        <h2 style="color: #ffffff; border-left: 4px solid #ff6b00; padding-left: 15px; margin-bottom: 2rem;">
+        <h2 class="section-title" style="color: #ffffff; border-left: 4px solid #ff6b00; padding-left: 15px; margin-bottom: 2rem;">
             <i class="fas fa-box" style="color: #ff6b00;"></i> Catálogo de Productos
         </h2>
         
+        <!-- ========================================== -->
+        <!-- BOTONES DE ADMIN (solo visibles para admin) -->
+        <!-- ========================================== -->
+        {% if session.get('es_admin') == 1 %}
+        <div style="margin-bottom: 2rem; display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="/admin/agregar" 
+               style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 30px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; border: none; cursor: pointer;">
+                <i class="fas fa-plus-circle"></i> Agregar Nuevo Producto
+            </a>
+            <a href="/admin" 
+               style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 30px; background: transparent; color: #ff6b00; border-radius: 50px; font-weight: 600; border: 2px solid #ff6b00; cursor: pointer;">
+                <i class="fas fa-cog"></i> Panel de Administración
+            </a>
+        </div>
+        {% endif %}
+        
+        <!-- CONTADOR DE PRODUCTOS -->
         <p style="color: #ff6b00; margin-bottom: 1rem;">
             <strong>Total: {{ productos|length if productos else 0 }} productos</strong>
         </p>
@@ -35,24 +97,33 @@
             {% if productos %}
                 {% for producto in productos %}
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 12px; padding: 1.5rem; height: 100%;">
-                        <h5 style="color: #ffffff; font-weight: 600;">{{ producto.nombre }}</h5>
-                        <p style="color: #cccccc; font-size: 0.9rem;">{{ producto.descripcion[:80] }}{% if producto.descripcion|length > 80 %}...{% endif %}</p>
+                    <div class="producto-card" style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 12px; padding: 1.5rem; height: 100%; transition: all 0.3s;">
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                        {% endif %}
                         
-                        <p style="color: #aaaaaa; font-size: 0.85rem;">
+                        <h5 class="card-title" style="color: #ffffff; font-weight: 600;">{{ producto.nombre }}</h5>
+                        <p class="card-text" style="color: #cccccc; font-size: 0.9rem;">{{ producto.descripcion[:80] }}{% if producto.descripcion|length > 80 %}...{% endif %}</p>
+                        
+                        <p style="color: #aaaaaa; font-size: 0.85rem; margin-bottom: 0.5rem;">
+                            <strong style="color: #ff6b00;">Categoría:</strong> {{ producto.categoria or 'Sin categoría' }}
+                        </p>
+                        <p style="color: #aaaaaa; font-size: 0.85rem; margin-bottom: 0.5rem;">
                             <strong style="color: #ff6b00;">Stock:</strong> {{ producto.stock }}
                         </p>
-                        <p style="color: #ff6b00; font-size: 1.4rem; font-weight: 700;">Bs. {{ "%.2f"|format(producto.precio) }}</p>
+                        <p class="precio" style="color: #ff6b00; font-size: 1.4rem; font-weight: 700;">Bs. {{ "%.2f"|format(producto.precio) }}</p>
                         
                         {% if session.get('usuario_id') %}
                             <a href="/agregar_carrito/{{ producto.id }}" 
-                               style="display: inline-block; text-decoration: none; text-align: center; padding: 10px 20px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; width: 100%; border: none; cursor: pointer;">
+                               class="btn-iron" 
+                               style="display: inline-block; text-decoration: none; text-align: center; padding: 10px 20px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; width: 100%; border: none; cursor: pointer; transition: all 0.3s;">
                                 <i class="fas fa-shopping-cart"></i> Agregar al carrito
                             </a>
                         {% else %}
                             <a href="/login" 
-                               style="display: inline-block; text-decoration: none; text-align: center; padding: 10px 20px; border: 2px solid #ff6b00; color: #ff6b00; border-radius: 50px; font-weight: 600; width: 100%; background: transparent;">
-                                <i class="fas fa-sign-in-alt"></i> Inicia sesión
+                               class="btn-iron-outline" 
+                               style="display: inline-block; text-decoration: none; text-align: center; padding: 10px 20px; border: 2px solid #ff6b00; color: #ff6b00; border-radius: 50px; font-weight: 600; width: 100%; background: transparent; transition: all 0.3s;">
+                                <i class="fas fa-sign-in-alt"></i> Inicia sesión para comprar
                             </a>
                         {% endif %}
                     </div>
@@ -62,6 +133,7 @@
                 <div class="col-12">
                     <div style="background: #0a0a0a; border: 1px solid #ff6b00; border-radius: 16px; padding: 3rem; text-align: center;">
                         <p style="color: #aaaaaa; font-size: 1.2rem;">No hay productos disponibles</p>
+                        <p style="color: #666666;">Agrega productos desde el panel de administración</p>
                     </div>
                 </div>
             {% endif %}

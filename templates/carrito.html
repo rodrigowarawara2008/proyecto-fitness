@@ -28,14 +28,14 @@
                         <td style="padding: 12px; color: #ffffff;">
                             <form method="POST" action="/actualizar_carrito/{{ item.id }}" style="display: flex; align-items: center; gap: 10px;">
                                 <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" style="width: 60px; padding: 5px; background: #0a0a0a; border: 1px solid #ff6b00; color: #ffffff; border-radius: 8px;">
-                                <button type="submit" class="btn-iron-outline" style="padding: 5px 15px; font-size: 0.8rem; background: transparent; border: 1px solid #ff6b00; color: #ff6b00; border-radius: 8px; cursor: pointer;">
+                                <button type="submit" style="padding: 5px 15px; font-size: 0.8rem; background: transparent; border: 1px solid #ff6b00; color: #ff6b00; border-radius: 8px; cursor: pointer;">
                                     <i class="fas fa-sync-alt"></i>
                                 </button>
                             </form>
                         </td>
                         <td style="padding: 12px; color: #ff6b00;">Bs. {{ "%.2f"|format(item.precio * item.cantidad) }}</td>
                         <td style="padding: 12px;">
-                            <a href="/eliminar_carrito/{{ item.id }}" class="btn-eliminar" style="background: #dc3545; color: #ffffff; border: none; padding: 6px 15px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+                            <a href="/eliminar_carrito/{{ item.id }}" style="background: #dc3545; color: #ffffff; border: none; padding: 6px 15px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
                                 <i class="fas fa-trash"></i> Eliminar
                             </a>
                         </td>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="text-end mt-4">
-            <a href="/finalizar_compra" class="btn-iron" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 40px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 700; border: none; cursor: pointer;">
+            <a href="/finalizar_compra" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 40px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 700; border: none; cursor: pointer;">
                 <i class="fas fa-check-circle"></i> Finalizar Compra
             </a>
         </div>
@@ -64,27 +64,10 @@
             <i class="fas fa-shopping-cart" style="font-size: 4rem; color: #333333; margin-bottom: 1rem;"></i>
             <h3 style="color: #ffffff;">Tu carrito está vacío</h3>
             <p style="color: #888888;">¡Explora nuestro catálogo y agrega productos!</p>
-            <a href="/" class="btn-iron" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 30px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; margin-top: 1rem;">
+            <a href="/" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 30px; background: #ff6b00; color: #ffffff; border-radius: 50px; font-weight: 600; margin-top: 1rem;">
                 <i class="fas fa-arrow-left"></i> Ver Productos
             </a>
         </div>
     {% endif %}
 </div>
-
-<style>
-    .btn-eliminar:hover {
-        background: #c82333 !important;
-        transform: scale(1.05);
-    }
-    
-    .btn-iron-outline:hover {
-        background: #ff6b00 !important;
-        color: #ffffff !important;
-    }
-    
-    .btn-iron:hover {
-        transform: scale(1.02);
-        box-shadow: 0 5px 20px rgba(255, 107, 0, 0.3);
-    }
-</style>
 {% endblock %}

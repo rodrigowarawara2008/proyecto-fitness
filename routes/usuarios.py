@@ -30,8 +30,8 @@ def registro():
             cursor = conexion.cursor()
             sql = """
             INSERT INTO usuarios
-            (nombre, correo, password)
-            VALUES (%s,%s,%s)
+            (nombre, correo, password, es_admin)
+            VALUES (%s,%s,%s, 0)
             """
             cursor.execute(sql, (nombre, correo, password))
             conexion.commit()
@@ -44,9 +44,7 @@ def registro():
             print(e)
             return f"Error: {e}"
     
-    # CAMBIADO: ahora busca en la carpeta usuarios/
     return render_template('usuarios/registro.html')
-
 
 # =========================
 # LOGIN
@@ -69,9 +67,9 @@ def login():
                 if check_password_hash(usuario['password'], password):
                     session['usuario_id'] = usuario['id']
                     session['nombre'] = usuario['nombre']
+                    session['es_admin'] = usuario.get('es_admin', 0)  # <--- AGREGADO
                     return redirect('/inicio')
             
-            # CAMBIADO: ahora busca en la carpeta usuarios/
             return render_template('usuarios/login.html', error="Correo o contraseña incorrectos")
         
         except Exception as e:
@@ -79,9 +77,7 @@ def login():
             print(e)
             return f"Error: {e}"
     
-    # CAMBIADO: ahora busca en la carpeta usuarios/
     return render_template('usuarios/login.html')
-
 
 # =========================
 # LOGOUT
